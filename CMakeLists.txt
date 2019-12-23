@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13.4)
+cmake_minimum_required(VERSION 3.12.0)
 project(vide)
 
 # extend module path for custom modules
