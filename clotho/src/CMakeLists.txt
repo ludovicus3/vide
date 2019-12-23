@@ -1,0 +1,16 @@
+set(PROJECT_SOURCES
+  )
+
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+
+#target_link_libraries(${PROJECT_NAME})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  VERSION ${PROJECT_VERSION}
+  PUBLIC_HEADER "${PUBLIC_HEADERS}"
+  )
+
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}_targets
+  RUNTIME DESTINATION bin COMPONENT libs
+  )
