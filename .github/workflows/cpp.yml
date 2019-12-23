@@ -9,7 +9,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/cmake-configure@
     - name: configure
       run: mkdir build && cd build && cmake ..
     - name: build
