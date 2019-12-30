@@ -1,0 +1,55 @@
+/* This file is part of the VIDE Project
+*
+*  The VIDE Project is free software: you can redistribute it and/or
+*  modify it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  The VIDE Project is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+*  Authors: Jason Galens <bogey.jlg@gmail.com>
+*/
+#ifndef VIDE__CLOTHO__VERSION_H
+#define VIDE__CLOTHO__VERSION_H
+
+#include <string_view>
+
+namespace vide {
+
+namespace clotho {
+
+class version {
+public:
+  constexpr static int major() noexcept {
+    return @PROJECT_VERSION_MAJOR@;
+  }
+
+  constexpr static int minor() noexcept {
+    return @PROJECT_VERSION_MINOR@;
+  }
+
+  constexpr static int patch() noexcept {
+    return @PROJECT_VERSION_PATCH@;
+  }
+
+  constexpr static int revision() noexcept {
+    return @PROJECT_VERSION_TWEAK@;
+  }
+
+  constexpr static std::string_view version() noexcept {
+    return std::string_view("@PROJECT_VERSION@");
+  }
+}; // class version
+
+} // namespace clotho
+
+} // namespace vide
+
+#endif // VIDE__CLOTHO__VERSION_H
+
