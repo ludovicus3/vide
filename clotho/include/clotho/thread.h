@@ -42,8 +42,12 @@ protected:
   virtual void run(); // default is to do nothing
 
 private:
+  thread_t(pthread_t id);
+
   thread_t(const thread_t&) = delete;
   thread_t& operator = (const thread_t&) = delete;
+
+  static void* pthread_runner(void* arg);
 
   pthread_t _id;
 }; // class thread_t

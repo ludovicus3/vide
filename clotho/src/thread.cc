@@ -17,12 +17,20 @@
 */
 #include <clotho/thread.h>
 
+#include <errno.h>
+
 static pthread_key_t key;
 static pthread_once_t key_once = PTHREAD_ONCE_INIT;
+
+static void
+create_key() {
+  pthread_key_create(&key, NULL);
+}
 
 namespace vide {
 
 namespace clotho {
+
 
 //thread_t() = default;
 //virtual ~thread_t() = default;
@@ -64,10 +72,10 @@ thread_t::start() {
   int result = pthread_attr_setstack_size(&attr, stacksize);
   */
 
-  int result = pthread_create(&_id, &attr, thread_t::run, this);
+  int result = pthread_create(&_id, &attr, thread_t::pthread_runner, this);
   if (result == EPERM) {
     pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-    result = pthread_create(&_id, &attr, thread_t::run, this);
+    result = pthread_create(&_id, &attr, thread_t::pthread_runner, this);
   }
 
   pthread_attr_destroy(&attr);
@@ -84,7 +92,7 @@ thread_t::sleep(unsigned long nsec) {
 
 void
 thread_t::terminate() {
-  int result = pthread_cancel(&_id);
+  int result = pthread_cancel(_id);
   if (result != 0) {
     // danger will robinson
   }
@@ -94,6 +102,15 @@ thread_t::terminate() {
 
 void
 thread_t::run() { 
+}
+
+/* private: -----------------------------------------------------------------*/
+thread_t::thread_t(pthread_t id) : _id(id) {}
+
+void*
+thread_t::pthread_runner(void* arg) {
+  thread_t* thread = reinterpret_cast<thread_t*>(arg);
+  thread->run();
 }
 
 } // namespace clotho

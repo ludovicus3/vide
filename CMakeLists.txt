@@ -12,4 +12,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # add subdirectories here
-#add_subdirectory(directory)
+add_subdirectory(clotho)
+
