@@ -2,7 +2,11 @@ set(PROJECT_SOURCES
   thread.cc
   )
 
-add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
+
+set(PUBLIC_HEADERS
+  "${CMAKE_CURRENT_BINARY_DIR}/../clotho/version.h"
+  )
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
