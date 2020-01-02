@@ -32,8 +32,9 @@ public:
   static thread_t* current();
 
   void start();
-  void sleep(unsigned long nsec);
   void terminate();
+
+  void wait();
 
 protected:
   virtual void run(); // default is to do nothing

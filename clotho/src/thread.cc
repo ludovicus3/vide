@@ -31,10 +31,7 @@ namespace vide {
 
 namespace clotho {
 
-
-//thread_t() = default;
 thread_t::~thread_t() {
-
 }
 
 thread_t*
@@ -74,10 +71,10 @@ thread_t::start() {
   int result = pthread_attr_setstack_size(&attr, stacksize);
   */
 
-  int result = pthread_create(&_id, &attr, thread_t::pthread_runner, this);
+  int result = pthread_create(&_id, &attr, thread_t::execute_thread, this);
   if (result == EPERM) {
     pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-    result = pthread_create(&_id, &attr, thread_t::pthread_runner, this);
+    result = pthread_create(&_id, &attr, thread_t::execute_thread, this);
   }
 
   pthread_attr_destroy(&attr);
@@ -88,16 +85,16 @@ thread_t::start() {
 }
 
 void
-thread_t::sleep(unsigned long nsec) {
-  // TODO: Implement
-}
-
-void
 thread_t::terminate() {
   int result = pthread_cancel(_id);
   if (result != 0) {
     // danger will robinson
   }
+}
+
+void
+thread_t::wait() {
+  pthread_join(_id, NULL);
 }
 
 /* protected: ---------------------------------------------------------------*/
