@@ -33,7 +33,9 @@ namespace clotho {
 
 
 //thread_t() = default;
-//virtual ~thread_t() = default;
+thread_t::~thread_t() {
+
+}
 
 thread_t*
 thread_t::current() {
@@ -99,7 +101,6 @@ thread_t::terminate() {
 }
 
 /* protected: ---------------------------------------------------------------*/
-
 void
 thread_t::run() { 
 }
@@ -108,8 +109,12 @@ thread_t::run() {
 thread_t::thread_t(pthread_t id) : _id(id) {}
 
 void*
-thread_t::pthread_runner(void* arg) {
+thread_t::execute_thread(void* arg) {
   thread_t* thread = reinterpret_cast<thread_t*>(arg);
+
+  pthread_once(&key_once, create_key);
+  pthread_setspecific(key, thread);
+
   thread->run();
 }
 

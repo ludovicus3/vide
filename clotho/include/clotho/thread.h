@@ -27,12 +27,9 @@ namespace clotho {
 class thread_t {
 public:
   thread_t() = default;
-  virtual ~thread_t() = default;
+  virtual ~thread_t();
 
   static thread_t* current();
-
-  thread_t(thread_t&&) noexcept = default;
-  thread_t& operator = (thread_t&&) noexcept = default;
 
   void start();
   void sleep(unsigned long nsec);
@@ -44,10 +41,13 @@ protected:
 private:
   thread_t(pthread_t id);
 
+  // cannot move or copy a thread 
   thread_t(const thread_t&) = delete;
   thread_t& operator = (const thread_t&) = delete;
+  thread_t(thread_t&&) noexcept = delete;
+  thread_t& operator = (thread_t&&) noexcept = delete;
 
-  static void* pthread_runner(void* arg);
+  static void* execute_thread(void* arg);
 
   pthread_t _id;
 }; // class thread_t
